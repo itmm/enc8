@@ -2,84 +2,271 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Encode and decode 8 bit characters</title>
+<title>Encode and decode 8 bit characters to ASCII</title>
 <link rel="stylesheet" type="text/css" href="slides/slides.css"></head>
 <body>
-<h1>Encode and decode 8 bit characters</h1>
+<h1>Encode and decode 8 bit characters to ASCII</h1>
 <div class="slides">
 <div class="page">
 <div class="slide"><div class="slide-nr">1</div><div class="headers">
-<h1>Encode and decode 8 bit characters</h1>
+<h1>Encode and decode 8 bit characters to ASCII</h1>
 </div></div>
+<ul><li>
+encode by escaping 8-bit characters with percentage sign (<code>%</code>)
+</li><li>
+and their 2-digit hexadecimal value
+</li></ul>
 </div>
-<div class="page"><div class="slide"><div class="slide-nr">2</div>
-<code>
-<span class="macro">@Def(<span class="name">file: enc8.cpp</span>)</span><br/>
-<span class="in1"></span><span class="keyword">#include</span> &lt;<span class="var">iostream</span>&gt;<br/>
-<br/>
-<span class="in1"></span><span class="type">int</span> <span class="fn">main</span>() {<br/>
-<span class="in2"></span><span class="type">char</span> <span class="var">digits</span>[] { <span class="str">"0123456789abcdef"</span> };<br/>
-<span class="in2"></span><span class="keyword">for</span> (;;) {<br/>
-<span class="in3"></span><span class="type">int</span> <span class="var">ch</span> { <span class="type">std</span>::<span class="var">cin</span>.<span class="fn">get</span>() };<br/>
-<span class="in3"></span><span class="keyword">if</span> (<span class="var">ch</span> == <span class="num">EOF</span>) { <span class="keyword">break</span>; }<br/>
-<span class="in3"></span><span class="keyword">if</span> (<span class="var">ch</span> &amp; <span class="num">0x80</span> || <span class="var">ch</span> == <span class="str">'%'</span>) {<br/>
-<span class="in4"></span><span class="type">std</span>::<span class="var">cout</span> &lt;&lt; <span class="str">'%'</span> &lt;&lt;<br/>
-<span class="in5"></span><span class="var">digits</span>[<span class="var">ch</span> &gt;&gt; <span class="num">4</span>] &lt;&lt;<br/>
-<span class="in5"></span><span class="var">digits</span>[<span class="var">ch</span> &amp; <span class="num">0xf</span>];<br/>
-<span class="in3"></span>} <span class="keyword">else</span> {<br/>
-<span class="in4"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">ch</span>);<br/>
-<span class="in3"></span>}<br/>
-<span class="in2"></span>}<br/>
-<span class="in1"></span>}<br/>
-<span class="macro">@End(<span class="name">file: enc8.cpp</span>)</span><br/>
-</code></div>
+</div>
+<h2>Encoding</h2>
+<div class="slides">
+<div class="page">
+<div class="slide"><div class="slide-nr">2</div><div class="headers">
+<h2>Encoding</h2>
+</div></div>
+<ul><li>
+escape non-ASCII characters read from <code><span class="type">std</span>::<span class="var">cin</span></code>
+</li><li>
+and write output to <code><span class="type">std</span>::<span class="var">cout</span></code>
+</li></ul>
 </div>
 <div class="page"><div class="slide"><div class="slide-nr">3</div>
 <code>
-<span class="macro">@Def(<span class="name">file: dec8.cpp</span>)</span><br/>
-<span class="in1"></span><span class="keyword">#include</span> &lt;<span class="var">iostream</span>&gt;<br/>
-<br/>
-<span class="in1"></span><span class="type">int</span> <span class="fn">to_digit</span>(<span class="type">int</span> <span class="var">ch</span>) {<br/>
-<span class="in2"></span><span class="keyword">if</span> (<span class="var">ch</span> &gt;= <span class="str">'0'</span> &amp;&amp; <span class="var">ch</span> &lt;= <span class="str">'9'</span>) {<br/>
-<span class="in3"></span><span class="keyword">return</span> <span class="var">ch</span> - <span class="str">'0'</span>;<br/>
-<span class="in2"></span>} <span class="keyword">else</span> <span class="keyword">if</span> (<span class="var">ch</span> &gt;= <span class="str">'a'</span> &amp;&amp; <span class="var">ch</span> &lt;= <span class="str">'f'</span>) {<br/>
-<span class="in3"></span><span class="keyword">return</span> <span class="var">ch</span> - <span class="str">'a'</span> + <span class="num">10</span>;<br/>
-<span class="in2"></span>} <span class="keyword">else</span> <span class="keyword">if</span> (<span class="var">ch</span> &gt;= <span class="str">'A'</span> &amp;&amp; <span class="var">ch</span> &lt;= <span class="str">'F'</span>) {<br/>
-<span class="in3"></span><span class="keyword">return</span> <span class="var">ch</span> - <span class="str">'A'</span> + <span class="num">10</span>;<br/>
-<span class="in2"></span>}<br/>
-<span class="in2"></span><span class="keyword">return</span> -<span class="num">1</span>;<br/>
-<span class="in1"></span>}<br/>
+<span class="macro">@Def(<span class="name">file: enc8.cpp</span>)</span><br/>
+<span class="in1"></span><span class="macro">@put(<span class="name">enc globals</span>)</span>;<br/>
 <span class="in1"></span><span class="type">int</span> <span class="fn">main</span>() {<br/>
-<span class="in2"></span><span class="keyword">for</span> (;;) {<br/>
-<span class="in3"></span><span class="type">int</span> <span class="var">ch</span> { <span class="type">std</span>::<span class="var">cin</span>.<span class="fn">get</span>() };<br/>
-<span class="in3"></span><span class="keyword">if</span> (<span class="var">ch</span> == <span class="num">EOF</span>) { <span class="keyword">break</span>; }<br/>
-<span class="in3"></span><span class="keyword">if</span> (<span class="var">ch</span> == <span class="str">'%'</span>) {<br/>
-<span class="in4"></span><span class="type">int</span> <span class="var">c1</span> { <span class="type">std</span>::<span class="var">cin</span>.<span class="fn">get</span>() };<br/>
-<span class="in4"></span><span class="type">int</span> <span class="var">d1</span> { <span class="fn">to_digit</span>(<span class="var">c1</span>) };<br/>
-<span class="in4"></span><span class="keyword">if</span> (<span class="var">d1</span> &gt;= <span class="num">0</span>) {<br/>
-<span class="in5"></span><span class="type">int</span> <span class="var">c2</span> { <span class="type">std</span>::<span class="var">cin</span>.<span class="fn">get</span>() };<br/>
-<span class="in5"></span><span class="type">int</span> <span class="var">d2</span> { <span class="fn">to_digit</span>(<span class="var">c2</span>) };<br/>
-<span class="in5"></span><span class="keyword">if</span> (<span class="var">d2</span> &gt;= <span class="num">0</span>) {<br/>
-<span class="in6"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>((<span class="var">d1</span> &lt;&lt; <span class="num">4</span>) | <span class="var">d2</span>);<br/>
-<span class="in5"></span>} <span class="keyword">else</span> {<br/>
-<span class="in6"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">ch</span>);<br/>
-<span class="in6"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">c1</span>);<br/>
-<span class="in6"></span><span class="keyword">if</span> (<span class="var">c2</span> == <span class="num">EOF</span>) { <span class="keyword">break</span>; }<br/>
-<span class="in6"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">c2</span>);<br/>
-<span class="in5"></span>}<br/>
-<span class="in4"></span>} <span class="keyword">else</span> {<br/>
-<span class="in5"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">ch</span>);<br/>
-<span class="in5"></span><span class="keyword">if</span> (<span class="var">c1</span> == <span class="num">EOF</span>) { <span class="keyword">break</span>; }<br/>
-<span class="in5"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">c1</span>);<br/>
-<span class="in4"></span>}<br/>
-<br/>
-<span class="in3"></span>} <span class="keyword">else</span> {<br/>
-<span class="in4"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">ch</span>);<br/>
-<span class="in3"></span>}<br/>
+<span class="in2"></span><span class="macro">@put(<span class="name">enc main</span>)</span>;<br/>
+<span class="in1"></span>}<br/>
+<span class="macro">@End(<span class="name">file: enc8.cpp</span>)</span><br/>
+</code></div>
+<ul><li>
+simple structure for the encoding command
+</li></ul>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">4</div>
+<code>
+<span class="macro">@def(<span class="name">enc globals</span>)</span><br/>
+<span class="in1"></span><span class="keyword">#include</span> &lt;<span class="var">iostream</span>&gt;<br/>
+<span class="macro">@end(<span class="name">enc globals</span>)</span><br/>
+</code></div>
+<ul><li>
+needs standard input output classes and constants
+</li></ul>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">5</div>
+<code>
+<span class="macro">@def(<span class="name">enc main</span>)</span><br/>
+<span class="in1"></span><span class="keyword">for</span> (;;) {<br/>
+<span class="in2"></span><span class="type">int</span> <span class="var">ch</span> { <span class="type">std</span>::<span class="var">cin</span>.<span class="fn">get</span>() };<br/>
+<span class="in2"></span><span class="keyword">if</span> (<span class="var">ch</span> == <span class="num">EOF</span>) { <span class="keyword">break</span>; }<br/>
+<span class="in2"></span><span class="keyword">if</span> (<span class="var">ch</span> &amp; <span class="num">0x80</span> || <span class="var">ch</span> == <span class="str">'%'</span>) {<br/>
+<span class="in3"></span><span class="macro">@put(<span class="name">write escaped</span>)</span>;<br/>
+<span class="in2"></span>} <span class="keyword">else</span> {<br/>
+<span class="in3"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">ch</span>);<br/>
 <span class="in2"></span>}<br/>
+<span class="in1"></span>}<br/>
+<span class="macro">@end(<span class="name">enc main</span>)</span><br/>
+</code></div>
+<ul><li>
+process characters until end is reached
+</li><li>
+escape only 8-bit characters and the percentage sign (<code>%</code>)
+</li></ul>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">6</div>
+<code>
+<span class="macro">@add(<span class="name">enc globals</span>)</span><br/>
+<span class="in1"></span><span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="type">char</span> <span class="var">digits</span>[] {<br/>
+<span class="in2"></span><span class="str">"0123456789abcdef"</span><br/>
+<span class="in1"></span>};<br/>
+<span class="macro">@end(<span class="name">enc globals</span>)</span><br/>
+</code></div>
+<ul><li>
+simple mapping to encode characters
+</li></ul>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">7</div>
+<code>
+<span class="macro">@def(<span class="name">write escaped</span>)</span><br/>
+<span class="in1"></span><span class="type">std</span>::<span class="var">cout</span> &lt;&lt; <span class="str">'%'</span> &lt;&lt;<br/>
+<span class="in2"></span><span class="var">digits</span>[<span class="var">ch</span> &gt;&gt; <span class="num">4</span>] &lt;&lt;<br/>
+<span class="in2"></span><span class="var">digits</span>[<span class="var">ch</span> &amp; <span class="num">0xf</span>];<br/>
+<span class="macro">@end(<span class="name">write escaped</span>)</span><br/>
+</code></div>
+<ul><li>
+write escaped character
+</li></ul>
+</div>
+</div>
+<h2>Decoding</h2>
+<div class="slides">
+<div class="page">
+<div class="slide"><div class="slide-nr">8</div><div class="headers">
+<h2>Decoding</h2>
+</div></div>
+<ul><li>
+try to decode escape sequences from <code><span class="type">std</span>::<span class="var">cin</span></code>
+</li><li>
+and write everything to <code><span class="type">std</span>::<span class="var">cout</span></code>
+</li></ul>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">9</div>
+<code>
+<span class="macro">@Def(<span class="name">file: dec8.cpp</span>)</span><br/>
+<span class="in1"></span><span class="macro">@put(<span class="name">dec globals</span>)</span>;<br/>
+<span class="in1"></span><span class="type">int</span> <span class="fn">main</span>() {<br/>
+<span class="in2"></span><span class="macro">@put(<span class="name">dec main</span>)</span>;<br/>
 <span class="in1"></span>}<br/>
 <span class="macro">@End(<span class="name">file: dec8.cpp</span>)</span><br/>
 </code></div>
+<ul><li>
+same file structure as <code><span class="var">enc</span></code>
+</li></ul>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">10</div>
+<code>
+<span class="macro">@def(<span class="name">dec globals</span>)</span><br/>
+<span class="in1"></span><span class="keyword">#include</span> &lt;<span class="var">iostream</span>&gt;<br/>
+<span class="macro">@end(<span class="name">dec globals</span>)</span><br/>
+</code></div>
+<ul><li>
+also needs standard input and output classes and constants
+</li></ul>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">11</div>
+<code>
+<span class="macro">@def(<span class="name">dec main</span>)</span><br/>
+<span class="in1"></span><span class="keyword">for</span> (;;) {<br/>
+<span class="in2"></span><span class="type">int</span> <span class="var">ch</span> { <span class="type">std</span>::<span class="var">cin</span>.<span class="fn">get</span>() };<br/>
+<span class="in2"></span><span class="keyword">if</span> (<span class="var">ch</span> == <span class="num">EOF</span>) { <span class="keyword">break</span>; }<br/>
+<span class="in2"></span><span class="keyword">if</span> (<span class="var">ch</span> == <span class="str">'%'</span>) {<br/>
+<span class="in3"></span><span class="macro">@put(<span class="name">unescape</span>)</span>;<br/>
+<span class="in2"></span>} <span class="keyword">else</span> {<br/>
+<span class="in3"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">ch</span>);<br/>
+<span class="in2"></span>}<br/>
+<span class="in1"></span>}<br/>
+<span class="macro">@end(<span class="name">dec main</span>)</span><br/>
+</code></div>
+<ul><li>
+try to expand escape sequences
+</li><li>
+and copy everything else
+</li></ul>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">12</div>
+<code>
+<span class="macro">@add(<span class="name">dec globals</span>)</span><br/>
+<span class="in1"></span><span class="type">int</span> <span class="fn">to_digit</span>(<span class="type">int</span> <span class="var">ch</span>) {<br/>
+<span class="in2"></span><span class="macro">@put(<span class="name">to digit</span>)</span>;<br/>
+<span class="in2"></span><span class="keyword">return</span> -<span class="num">1</span>;<br/>
+<span class="in1"></span>}<br/>
+<span class="macro">@end(<span class="name">dec globals</span>)</span><br/>
+</code></div>
+<ul><li>
+function to convert a char to a hexadecimal digit
+</li><li>
+returns negative value, if the character does not represent a valid  hexadecimal digit
+</li></ul>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">13</div>
+<code>
+<span class="macro">@def(<span class="name">unescape</span>)</span><br/>
+<span class="in1"></span><span class="type">int</span> <span class="var">first_ch</span> { <span class="type">std</span>::<span class="var">cin</span>.<span class="fn">get</span>() };<br/>
+<span class="in1"></span><span class="type">int</span> <span class="var">first_dgt</span> { <span class="fn">to_digit</span>(<span class="var">first_ch</span>) };<br/>
+<span class="in1"></span><span class="keyword">if</span> (<span class="var">first_dgt</span> &gt;= <span class="num">0</span>) {<br/>
+<span class="in2"></span><span class="macro">@put(<span class="name">parse 2nd digit</span>)</span>;<br/>
+<span class="in1"></span>} <span class="keyword">else</span> {<br/>
+<span class="in2"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">ch</span>);<br/>
+<span class="in2"></span><span class="keyword">if</span> (<span class="var">first_ch</span> == <span class="num">EOF</span>) { <span class="keyword">break</span>; }<br/>
+<span class="in2"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">first_ch</span>);<br/>
+<span class="in1"></span>}<br/>
+<br/>
+<span class="macro">@end(<span class="name">unescape</span>)</span><br/>
+</code></div>
+<ul><li>
+if the first character after the escape sign is a valid hexadecimal  digit:
+</li><li>
+continue with the next character
+</li><li>
+otherwise copy escape sign and first character to output
+</li><li>
+unless there is no first character, of course
+</li></ul>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">14</div>
+<code>
+<span class="macro">@def(<span class="name">parse 2nd digit</span>)</span><br/>
+<span class="in1"></span><span class="type">int</span> <span class="var">second_ch</span> { <span class="type">std</span>::<span class="var">cin</span>.<span class="fn">get</span>() };<br/>
+<span class="in1"></span><span class="type">int</span> <span class="var">second_dgt</span> {<br/>
+<span class="in2"></span><span class="fn">to_digit</span>(<span class="var">second_ch</span>)<br/>
+<span class="in1"></span>};<br/>
+<span class="in1"></span><span class="keyword">if</span> (<span class="var">second_dgt</span> &gt;= <span class="num">0</span>) {<br/>
+<span class="in2"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<br/>
+<span class="in3"></span>(<span class="var">first_dgt</span> &lt;&lt; <span class="num">4</span>) | <span class="var">second_dgt</span><br/>
+<span class="in2"></span>);<br/>
+<span class="in1"></span>} <span class="keyword">else</span> {<br/>
+<span class="in2"></span><span class="macro">@put(<span class="name">copy escape seq</span>)</span>;<br/>
+<span class="in1"></span>}<br/>
+<span class="macro">@end(<span class="name">parse 2nd digit</span>)</span><br/>
+</code></div>
+<ul><li>
+if the second character is a valid hexadecimal digit:
+</li><li>
+write the character with the matching byte value
+</li><li>
+otherwise copy escape sign, first character and the second character  to output
+</li></ul>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">15</div>
+<code>
+<span class="macro">@def(<span class="name">copy escape seq</span>)</span><br/>
+<span class="in1"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">ch</span>);<br/>
+<span class="in1"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">first_ch</span>);<br/>
+<span class="in1"></span><span class="keyword">if</span> (<span class="var">second_ch</span> == <span class="num">EOF</span>) { <span class="keyword">break</span>; }<br/>
+<span class="in1"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">second_ch</span>);<br/>
+<span class="macro">@end(<span class="name">copy escape seq</span>)</span><br/>
+</code></div>
+<ul><li>
+copy escape sign, first character and the second character  to output
+</li><li>
+unless there is no second character
+</li></ul>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">16</div>
+<code>
+<span class="macro">@def(<span class="name">to digit</span>)</span><br/>
+<span class="in1"></span><span class="keyword">if</span> ((<span class="var">ch</span> -= <span class="str">'0'</span>) &lt;= <span class="num">9</span>) { <span class="keyword">return</span> <span class="var">ch</span>; }<br/>
+<span class="macro">@end(<span class="name">to digit</span>)</span><br/>
+</code></div>
+<ul><li>
+return valid decimal digit
+</li></ul>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">17</div>
+<code>
+<span class="macro">@add(<span class="name">to digit</span>)</span><br/>
+<span class="in1"></span><span class="keyword">if</span> ((<span class="var">ch</span> -= <span class="str">'A'</span> - <span class="str">'0'</span>) &lt; <span class="num">0</span> ) {<br/>
+<span class="in2"></span><span class="keyword">return</span> <span class="var">ch</span>;<br/>
+<span class="in1"></span>}<br/>
+<span class="in1"></span><span class="keyword">if</span> (<span class="var">ch</span> &lt;= <span class="num">5</span>) { <span class="keyword">return</span> <span class="var">ch</span> + <span class="num">10</span>; }<br/>
+<span class="macro">@end(<span class="name">to digit</span>)</span><br/>
+</code></div>
+<ul><li>
+check for the letters <code><span class="var">A</span></code> to <code><span class="var">F</span></code>
+</li></ul>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">18</div>
+<code>
+<span class="macro">@add(<span class="name">to digit</span>)</span><br/>
+<span class="in1"></span><span class="keyword">if</span> ((<span class="var">ch</span> -= <span class="str">'a'</span> - <span class="str">'A'</span>) &lt; <span class="num">0</span>) {<br/>
+<span class="in2"></span><span class="keyword">return</span> <span class="var">ch</span>;<br/>
+<span class="in1"></span>}<br/>
+<span class="in1"></span><span class="keyword">if</span> (<span class="var">ch</span> &lt;= <span class="num">5</span>) { <span class="keyword">return</span> <span class="var">ch</span> + <span class="num">10</span>; }<br/>
+<span class="macro">@end(<span class="name">to digit</span>)</span><br/>
+</code></div>
+<ul><li>
+check for the letters <code><span class="var">a</span></code> to <code><span class="var">f</span></code>
+</li></ul>
 </div>
 </body>
 </html>
