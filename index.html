@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Encode and decode 8 bit characters</title>
+<link rel="stylesheet" type="text/css" href="slides/slides.css"></head>
+<body>
+<h1>Encode and decode 8 bit characters</h1>
+<div class="slides">
+<div class="page">
+<div class="slide"><div class="slide-nr">1</div><div class="headers">
+<h1>Encode and decode 8 bit characters</h1>
+</div></div>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">2</div>
+<code>
+<span class="macro">@Def(<span class="name">file: enc8.cpp</span>)</span><br/>
+<span class="in1"></span><span class="keyword">#include</span> &lt;<span class="var">iostream</span>&gt;<br/>
+<br/>
+<span class="in1"></span><span class="type">int</span> <span class="fn">main</span>() {<br/>
+<span class="in2"></span><span class="type">char</span> <span class="var">digits</span>[] { <span class="str">"0123456789abcdef"</span> };<br/>
+<span class="in2"></span><span class="keyword">for</span> (;;) {<br/>
+<span class="in3"></span><span class="type">int</span> <span class="var">ch</span> { <span class="type">std</span>::<span class="var">cin</span>.<span class="fn">get</span>() };<br/>
+<span class="in3"></span><span class="keyword">if</span> (<span class="var">ch</span> == <span class="num">EOF</span>) { <span class="keyword">break</span>; }<br/>
+<span class="in3"></span><span class="keyword">if</span> (<span class="var">ch</span> &amp; <span class="num">0x80</span> || <span class="var">ch</span> == <span class="str">'%'</span>) {<br/>
+<span class="in4"></span><span class="type">std</span>::<span class="var">cout</span> &lt;&lt; <span class="str">'%'</span> &lt;&lt;<br/>
+<span class="in5"></span><span class="var">digits</span>[<span class="var">ch</span> &gt;&gt; <span class="num">4</span>] &lt;&lt;<br/>
+<span class="in5"></span><span class="var">digits</span>[<span class="var">ch</span> &amp; <span class="num">0xf</span>];<br/>
+<span class="in3"></span>} <span class="keyword">else</span> {<br/>
+<span class="in4"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">ch</span>);<br/>
+<span class="in3"></span>}<br/>
+<span class="in2"></span>}<br/>
+<span class="in1"></span>}<br/>
+<span class="macro">@End(<span class="name">file: enc8.cpp</span>)</span><br/>
+</code></div>
+</div>
+<div class="page"><div class="slide"><div class="slide-nr">3</div>
+<code>
+<span class="macro">@Def(<span class="name">file: dec8.cpp</span>)</span><br/>
+<span class="in1"></span><span class="keyword">#include</span> &lt;<span class="var">iostream</span>&gt;<br/>
+<br/>
+<span class="in1"></span><span class="type">int</span> <span class="fn">to_digit</span>(<span class="type">int</span> <span class="var">ch</span>) {<br/>
+<span class="in2"></span><span class="keyword">if</span> (<span class="var">ch</span> &gt;= <span class="str">'0'</span> &amp;&amp; <span class="var">ch</span> &lt;= <span class="str">'9'</span>) {<br/>
+<span class="in3"></span><span class="keyword">return</span> <span class="var">ch</span> - <span class="str">'0'</span>;<br/>
+<span class="in2"></span>} <span class="keyword">else</span> <span class="keyword">if</span> (<span class="var">ch</span> &gt;= <span class="str">'a'</span> &amp;&amp; <span class="var">ch</span> &lt;= <span class="str">'f'</span>) {<br/>
+<span class="in3"></span><span class="keyword">return</span> <span class="var">ch</span> - <span class="str">'a'</span> + <span class="num">10</span>;<br/>
+<span class="in2"></span>} <span class="keyword">else</span> <span class="keyword">if</span> (<span class="var">ch</span> &gt;= <span class="str">'A'</span> &amp;&amp; <span class="var">ch</span> &lt;= <span class="str">'F'</span>) {<br/>
+<span class="in3"></span><span class="keyword">return</span> <span class="var">ch</span> - <span class="str">'A'</span> + <span class="num">10</span>;<br/>
+<span class="in2"></span>}<br/>
+<span class="in2"></span><span class="keyword">return</span> -<span class="num">1</span>;<br/>
+<span class="in1"></span>}<br/>
+<span class="in1"></span><span class="type">int</span> <span class="fn">main</span>() {<br/>
+<span class="in2"></span><span class="keyword">for</span> (;;) {<br/>
+<span class="in3"></span><span class="type">int</span> <span class="var">ch</span> { <span class="type">std</span>::<span class="var">cin</span>.<span class="fn">get</span>() };<br/>
+<span class="in3"></span><span class="keyword">if</span> (<span class="var">ch</span> == <span class="num">EOF</span>) { <span class="keyword">break</span>; }<br/>
+<span class="in3"></span><span class="keyword">if</span> (<span class="var">ch</span> == <span class="str">'%'</span>) {<br/>
+<span class="in4"></span><span class="type">int</span> <span class="var">c1</span> { <span class="type">std</span>::<span class="var">cin</span>.<span class="fn">get</span>() };<br/>
+<span class="in4"></span><span class="type">int</span> <span class="var">d1</span> { <span class="fn">to_digit</span>(<span class="var">c1</span>) };<br/>
+<span class="in4"></span><span class="keyword">if</span> (<span class="var">d1</span> &gt;= <span class="num">0</span>) {<br/>
+<span class="in5"></span><span class="type">int</span> <span class="var">c2</span> { <span class="type">std</span>::<span class="var">cin</span>.<span class="fn">get</span>() };<br/>
+<span class="in5"></span><span class="type">int</span> <span class="var">d2</span> { <span class="fn">to_digit</span>(<span class="var">c2</span>) };<br/>
+<span class="in5"></span><span class="keyword">if</span> (<span class="var">d2</span> &gt;= <span class="num">0</span>) {<br/>
+<span class="in6"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>((<span class="var">d1</span> &lt;&lt; <span class="num">4</span>) | <span class="var">d2</span>);<br/>
+<span class="in5"></span>} <span class="keyword">else</span> {<br/>
+<span class="in6"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">ch</span>);<br/>
+<span class="in6"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">c1</span>);<br/>
+<span class="in6"></span><span class="keyword">if</span> (<span class="var">c2</span> == <span class="num">EOF</span>) { <span class="keyword">break</span>; }<br/>
+<span class="in6"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">c2</span>);<br/>
+<span class="in5"></span>}<br/>
+<span class="in4"></span>} <span class="keyword">else</span> {<br/>
+<span class="in5"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">ch</span>);<br/>
+<span class="in5"></span><span class="keyword">if</span> (<span class="var">c1</span> == <span class="num">EOF</span>) { <span class="keyword">break</span>; }<br/>
+<span class="in5"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">c1</span>);<br/>
+<span class="in4"></span>}<br/>
+<br/>
+<span class="in3"></span>} <span class="keyword">else</span> {<br/>
+<span class="in4"></span><span class="type">std</span>::<span class="var">cout</span>.<span class="fn">put</span>(<span class="var">ch</span>);<br/>
+<span class="in3"></span>}<br/>
+<span class="in2"></span>}<br/>
+<span class="in1"></span>}<br/>
+<span class="macro">@End(<span class="name">file: dec8.cpp</span>)</span><br/>
+</code></div>
+</div>
+</body>
+</html>
