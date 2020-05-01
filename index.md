@@ -1,5 +1,5 @@
-# Encode and decode 8 bit characters to ASCII
-* encode by escaping 8-bit characters with percentage sign (`%`)
+# Encode and decode 8-bit characters to ASCII
+* encode by escaping 8-bit characters with percentage sign (`@s(%)`)
 * and their 2-digit hexadecimal value
 
 ## Encoding
@@ -18,7 +18,7 @@
 
 ```
 @def(enc globals)
-	#include <iostream>
+	#include @s(<iostream>)
 @end(enc globals)
 ```
 * needs standard input output classes and constants
@@ -37,7 +37,7 @@
 @end(enc main)
 ```
 * process characters until end is reached
-* escape only 8-bit characters and the percentage sign (`%`)
+* escape only 8-bit characters and the percentage sign (`@s(%)`)
 
 ```
 @add(enc globals)
@@ -73,7 +73,7 @@
 
 ```
 @def(dec globals)
-	#include <iostream>
+	#include @s(<iostream>)
 @end(dec globals)
 ```
 * also needs standard input and output classes and constants
@@ -173,7 +173,7 @@
 	if (ch <= 5) { return ch + 10; }
 @end(to digit)
 ```
-* check for the letters `A` to `F`
+* check for the letters `@s(A)` to `@s(F)`
 
 ```
 @add(to digit)
@@ -183,5 +183,5 @@
 	if (ch <= 5) { return ch + 10; }
 @end(to digit)
 ```
-* check for the letters `a` to `f`
+* check for the letters `@s(a)` to `@s(f)`
 

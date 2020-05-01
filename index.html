@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Encode and decode 8 bit characters to ASCII</title>
+<title>Encode and decode 8-bit characters to ASCII</title>
 <link rel="stylesheet" type="text/css" href="slides/slides.css"></head>
 <body>
-<h1>Encode and decode 8 bit characters to ASCII</h1>
+<h1>Encode and decode 8-bit characters to ASCII</h1>
 <div class="slides">
 <div class="page">
 <div class="slide"><div class="slide-nr">1</div><div class="headers">
-<h1>Encode and decode 8 bit characters to ASCII</h1>
+<h1>Encode and decode 8-bit characters to ASCII</h1>
 </div></div>
 <ul><li>
-encode by escaping 8-bit characters with percentage sign (<code>%</code>)
+encode by escaping 8-bit characters with percentage sign (<code><span class="str">%</span></code>)
 </li><li>
 and their 2-digit hexadecimal value
 </li></ul>
@@ -46,7 +46,7 @@ simple structure for the encoding command
 <div class="page"><div class="slide"><div class="slide-nr">4</div>
 <code>
 <span class="macro">@def(<span class="name">enc globals</span>)</span><br/>
-<span class="in1"></span><span class="keyword">#include</span> &lt;<span class="var">iostream</span>&gt;<br/>
+<span class="in1"></span><span class="keyword">#include</span> <span class="str">&lt;iostream&gt;</span><br/>
 <span class="macro">@end(<span class="name">enc globals</span>)</span><br/>
 </code></div>
 <ul><li>
@@ -70,7 +70,7 @@ needs standard input output classes and constants
 <ul><li>
 process characters until end is reached
 </li><li>
-escape only 8-bit characters and the percentage sign (<code>%</code>)
+escape only 8-bit characters and the percentage sign (<code><span class="str">%</span></code>)
 </li></ul>
 </div>
 <div class="page"><div class="slide"><div class="slide-nr">6</div>
@@ -126,7 +126,7 @@ same file structure as <code><span class="var">enc</span></code>
 <div class="page"><div class="slide"><div class="slide-nr">10</div>
 <code>
 <span class="macro">@def(<span class="name">dec globals</span>)</span><br/>
-<span class="in1"></span><span class="keyword">#include</span> &lt;<span class="var">iostream</span>&gt;<br/>
+<span class="in1"></span><span class="keyword">#include</span> <span class="str">&lt;iostream&gt;</span><br/>
 <span class="macro">@end(<span class="name">dec globals</span>)</span><br/>
 </code></div>
 <ul><li>
@@ -252,7 +252,7 @@ return valid decimal digit
 <span class="macro">@end(<span class="name">to digit</span>)</span><br/>
 </code></div>
 <ul><li>
-check for the letters <code><span class="var">A</span></code> to <code><span class="var">F</span></code>
+check for the letters <code><span class="str">A</span></code> to <code><span class="str">F</span></code>
 </li></ul>
 </div>
 <div class="page"><div class="slide"><div class="slide-nr">18</div>
@@ -265,7 +265,7 @@ check for the letters <code><span class="var">A</span></code> to <code><span cla
 <span class="macro">@end(<span class="name">to digit</span>)</span><br/>
 </code></div>
 <ul><li>
-check for the letters <code><span class="var">a</span></code> to <code><span class="var">f</span></code>
+check for the letters <code><span class="str">a</span></code> to <code><span class="str">f</span></code>
 </li></ul>
 </div>
 </body>
