@@ -32,8 +32,9 @@ ordinary character.
 ## Source Code
 
 The source code is generated with my documentation system `hex` that can
-be downloaded from `https://github.com/itmm/hex`. The source is generated
-from the markdown file `index.md`. `index.html` is a slide-show generated
-from the same markdown file.
+be downloaded from [](https://github.com/itmm/hex). The source is
+generated from the markdown file `index.md`. `index.html` is a slide-show
+generated from the same markdown file.
 
-The generated slide-show can be viewed at `https://itmm.github.io/enc8/`
+The generated slide-show can be viewed at
+[](https://itmm.github.io/enc8/)
